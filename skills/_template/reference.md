@@ -1,7 +1,7 @@
-# Reference
+# 参考文档
 
-Put detailed documentation here. The agent reads this file only when needed, keeping SKILL.md concise.
+将详细说明放在此处。Agent 仅在需要时读取本文件，以保持 `SKILL.md` 简洁。
 
-## Sections
+## 章节
 
-Add API details, examples, or domain-specific knowledge that does not belong in the main skill file.
+可在此补充 API 细节、示例，或不适合写在主技能文件中的领域知识。

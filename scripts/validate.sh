@@ -6,11 +6,11 @@ SKILLS_DIR="${ROOT_DIR}/skills"
 
 usage() {
   cat <<'EOF'
-Usage: ./scripts/validate.sh [skill-name ...]
+用法: ./scripts/validate.sh [技能名 ...]
 
-Validate SKILL.md frontmatter and directory conventions.
+校验 SKILL.md 的 frontmatter 与目录规范。
 
-With no arguments, validates all installable skills (skips _-prefixed dirs).
+不传参数时，校验所有可安装技能（跳过以 _ 开头的目录）。
 EOF
 }
 
@@ -59,12 +59,12 @@ validate_skill() {
   local warnings=0
 
   if [[ ! -f "${skill_file}" ]]; then
-    echo "ERROR [${skill_name}]: missing SKILL.md"
+    echo "错误 [${skill_name}]: 缺少 SKILL.md"
     return 1
   fi
 
   if ! head -n 1 "${skill_file}" | grep -q '^---$'; then
-    echo "ERROR [${skill_name}]: SKILL.md must start with YAML frontmatter (---)"
+    echo "错误 [${skill_name}]: SKILL.md 必须以 YAML frontmatter（---）开头"
     errors=$((errors + 1))
   fi
 
@@ -74,36 +74,36 @@ validate_skill() {
   line_count="$(wc -l < "${skill_file}" | tr -d ' ')"
 
   if [[ -z "${name}" ]]; then
-    echo "ERROR [${skill_name}]: frontmatter field 'name' is required"
+    echo "错误 [${skill_name}]: frontmatter 字段 name 为必填项"
     errors=$((errors + 1))
   elif [[ ! "${name}" =~ ^[a-z0-9-]+$ ]]; then
-    echo "ERROR [${skill_name}]: 'name' must use lowercase letters, numbers, and hyphens only"
+    echo "错误 [${skill_name}]: name 只能使用小写字母、数字和连字符"
     errors=$((errors + 1))
   elif (( ${#name} > 64 )); then
-    echo "ERROR [${skill_name}]: 'name' exceeds 64 characters"
+    echo "错误 [${skill_name}]: name 超过 64 个字符"
     errors=$((errors + 1))
   fi
 
   if [[ -z "${description}" ]]; then
-    echo "ERROR [${skill_name}]: frontmatter field 'description' is required"
+    echo "错误 [${skill_name}]: frontmatter 字段 description 为必填项"
     errors=$((errors + 1))
   elif (( ${#description} > 1024 )); then
-    echo "ERROR [${skill_name}]: 'description' exceeds 1024 characters"
+    echo "错误 [${skill_name}]: description 超过 1024 个字符"
     errors=$((errors + 1))
   fi
 
   if [[ -n "${name}" && "${skill_name}" != "${name}" ]]; then
-    echo "WARN  [${skill_name}]: directory name '${skill_name}' does not match frontmatter name '${name}'"
+    echo "警告 [${skill_name}]: 目录名「${skill_name}」与 frontmatter 中的 name「${name}」不一致"
     warnings=$((warnings + 1))
   fi
 
   if (( line_count > 500 )); then
-    echo "WARN  [${skill_name}]: SKILL.md has ${line_count} lines (recommended <= 500)"
+    echo "警告 [${skill_name}]: SKILL.md 共 ${line_count} 行（建议不超过 500 行）"
     warnings=$((warnings + 1))
   fi
 
   if grep -q '\\' "${skill_file}"; then
-    echo "WARN  [${skill_name}]: SKILL.md contains backslashes; use forward slashes for paths"
+    echo "警告 [${skill_name}]: SKILL.md 包含反斜杠，路径请使用正斜杠"
     warnings=$((warnings + 1))
   fi
 
@@ -111,7 +111,7 @@ validate_skill() {
     return 1
   fi
 
-  echo "OK    [${skill_name}]"
+  echo "通过 [${skill_name}]"
   return 0
 }
 
@@ -122,7 +122,7 @@ main() {
   fi
 
   if [[ ! -d "${SKILLS_DIR}" ]]; then
-    echo "ERROR: skills directory not found at ${SKILLS_DIR}"
+    echo "错误: 未找到 skills 目录 ${SKILLS_DIR}"
     exit 1
   fi
 
@@ -140,7 +140,7 @@ main() {
   fi
 
   if ((${#targets[@]} == 0)); then
-    echo "No installable skills found."
+    echo "未找到可安装的技能。"
     exit 0
   fi
 
@@ -148,7 +148,7 @@ main() {
   local skill
   for skill in "${targets[@]}"; do
     if [[ "${skill}" == _* ]]; then
-      echo "SKIP  [${skill}]: _-prefixed directories are templates, not installable skills"
+      echo "跳过 [${skill}]: 以 _ 开头的目录为模板，不可安装"
       continue
     fi
     validate_skill "${skill}" || failed=1
