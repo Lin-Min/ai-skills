@@ -19,7 +19,7 @@
 ## 快速开始
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Lin-Min/ai-skills.git
 cd ai-skills
 ./scripts/install.sh
 ```
