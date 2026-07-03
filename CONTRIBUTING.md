@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing Cursor Agent Skills to this repository.
+Thank you for contributing AI agent skills to this repository.
 
 ## Create a new skill
 

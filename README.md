@@ -1,6 +1,6 @@
-# cursor-skills
+# ai-skills
 
-A lightweight Git repository for managing and sharing [Cursor Agent Skills](https://cursor.com/docs).
+A lightweight Git repository for managing and sharing AI agent skills (compatible with [Cursor Agent Skills](https://cursor.com/docs)).
 
 Clone this repo, run the install script, and skills are copied to `~/.cursor/skills/` so they are available across all your projects.
 
@@ -8,7 +8,7 @@ Clone this repo, run the install script, and skills are copied to `~/.cursor/ski
 
 ```bash
 git clone <your-repo-url>
-cd cursor-skills
+cd ai-skills
 ./scripts/install.sh
 ```
 
